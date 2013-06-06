@@ -25,12 +25,12 @@ public class AmmeterClient {
 			while (true) {
 				Socket clientSocket = serverSocket.accept();
 				SocketAddress socketAddress = clientSocket.getRemoteSocketAddress();
-				InetAddress inetAddress = clientSocket.getInetAddress();
-				System.out.println(inetAddress.getHostAddress());
-				System.out.println(socketAddress.toString());
-				Socket testSocket = new Socket(inetAddress.getHostAddress(), port);
-				InputStream socketReader = testSocket.getInputStream();
-				OutputStream socketWriter = testSocket.getOutputStream();
+//				InetAddress inetAddress = clientSocket.getInetAddress();
+//				System.out.println(inetAddress.getHostAddress());
+//				System.out.println(socketAddress.toString());
+//				Socket testSocket = new Socket(inetAddress.getHostAddress(), port);
+				InputStream socketReader = clientSocket.getInputStream();
+				OutputStream socketWriter = clientSocket.getOutputStream();
 				byte[] b = new byte[1024];
 //				6875 06 00 08 08 12
 				b[0] = (byte) 0x68;
@@ -64,6 +64,7 @@ public class AmmeterClient {
 					totalBytesRcvd+=bytesRcvd;
 				}
 				System.out.println("Receved: "+new String(received));
+				clientSocket.close();
 			}
 			
 			

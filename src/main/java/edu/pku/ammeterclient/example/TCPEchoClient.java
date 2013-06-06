@@ -15,7 +15,7 @@ public class TCPEchoClient {
 
 	public static void main(String[] args) throws UnknownHostException, IOException {
 		TCPEchoClient tcpEchoClient = new TCPEchoClient();
-		tcpEchoClient.connect("42.96.187.236", 5000);
+		tcpEchoClient.connect("211.140.18.112", 5000);
 	}
 
 }
