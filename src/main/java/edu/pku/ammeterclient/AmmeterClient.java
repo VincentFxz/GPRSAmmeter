@@ -15,7 +15,7 @@ public class AmmeterClient {
 	private int i = 0;
 
 	public void test() {
-		String serverHost = "211.140.18.108";
+//		String serverHost = "211.140.18.108";
 		int port = 5000;
 		try{
 			
