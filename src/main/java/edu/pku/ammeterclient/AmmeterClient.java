@@ -27,7 +27,7 @@ public class AmmeterClient {
 				SocketAddress socketAddress = clientSocket.getRemoteSocketAddress();
 //				InetAddress inetAddress = clientSocket.getInetAddress();
 //				System.out.println(inetAddress.getHostAddress());
-//				System.out.println(socketAddress.toString());
+				System.out.println(socketAddress.toString());
 //				Socket testSocket = new Socket(inetAddress.getHostAddress(), port);
 				InputStream socketReader = clientSocket.getInputStream();
 				OutputStream socketWriter = clientSocket.getOutputStream();
@@ -62,9 +62,11 @@ public class AmmeterClient {
 						throw new SocketException("Connection closed prematurely");
 					}
 					totalBytesRcvd+=bytesRcvd;
-					System.out.println("Receved: "+new String(received));
+					
+					System.out.println("Receved: "+new String(AmmeterClient.bytesToHexString(received)));
+					System.out.println(totalBytesRcvd);
 				}
-				System.out.println("Receved: "+new String(received));
+				System.out.println("Receved: "+new String(AmmeterClient.bytesToHexString(received)));
 				clientSocket.close();
 			}
 			
@@ -76,6 +78,22 @@ public class AmmeterClient {
 		
 		
 	}
+	
+	public static String bytesToHexString(byte[] src){  
+	    StringBuilder stringBuilder = new StringBuilder("");  
+	    if (src == null || src.length <= 0) {  
+	        return null;  
+	    }  
+	    for (int i = 0; i < src.length; i++) {  
+	        int v = src[i] & 0xFF;  
+	        String hv = Integer.toHexString(v);  
+	        if (hv.length() < 2) {  
+	            stringBuilder.append(0);  
+	        }  
+	        stringBuilder.append(hv);  
+	    }  
+	    return stringBuilder.toString();  
+	}  
 
 	public static void main(String[] args) {
 
