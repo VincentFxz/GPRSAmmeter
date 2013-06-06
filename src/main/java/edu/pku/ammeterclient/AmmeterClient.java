@@ -62,6 +62,7 @@ public class AmmeterClient {
 						throw new SocketException("Connection closed prematurely");
 					}
 					totalBytesRcvd+=bytesRcvd;
+					System.out.println("Receved: "+new String(received));
 				}
 				System.out.println("Receved: "+new String(received));
 				clientSocket.close();
