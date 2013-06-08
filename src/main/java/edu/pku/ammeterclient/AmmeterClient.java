@@ -25,6 +25,7 @@ public class AmmeterClient {
 			while (true) {
 				Socket clientSocket = serverSocket.accept();
                 if(null != clientSocket){
+                    System.out.println("ammeter gprs connected");
                     SocketAddress socketAddress = clientSocket.getRemoteSocketAddress();
                     System.out.println(socketAddress.toString());
                     InputStream socketReader = clientSocket.getInputStream();
@@ -58,8 +59,12 @@ public class AmmeterClient {
                     socketWriter.flush();
 
                     while (true){
+
                         byte[] received = new byte[1024];
-                        socketReader.read(received);
+                        int dataSize = socketReader.read(received);
+                        if(dataSize > 0){
+                            System.out.println("data received");
+                        }
                         System.out.println(AmmeterClient.bytesToHexString(received));
                     }
                 }
