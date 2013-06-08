@@ -33,7 +33,7 @@ public class AmmeterClient {
                     BufferedReader in = new BufferedReader(new InputStreamReader(socketReader));
                     PrintWriter out = new PrintWriter(socketWriter);
 
-                    byte[] b = new byte[16];
+                    byte[] b = new byte[19];
 //				    68 75 06 00 08 08 12
                     b[0] = (byte) 0xfe;
                     b[1] = (byte) 0xfe;
