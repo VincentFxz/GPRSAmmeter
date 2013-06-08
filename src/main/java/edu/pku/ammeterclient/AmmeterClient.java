@@ -1,13 +1,9 @@
 package edu.pku.ammeterclient;
 
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.net.InetAddress;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketAddress;
-import java.net.SocketException;
 
 public class AmmeterClient {
 
@@ -30,6 +26,8 @@ public class AmmeterClient {
                     System.out.println(socketAddress.toString());
                     InputStream socketReader = clientSocket.getInputStream();
                     OutputStream socketWriter = clientSocket.getOutputStream();
+                    BufferedReader in = new BufferedReader(new InputStreamReader(socketReader));
+                    PrintWriter out = new PrintWriter(socketWriter);
 
                     byte[] b = new byte[1024];
 //				    68 75 06 00 08 08 12
@@ -49,23 +47,16 @@ public class AmmeterClient {
                     b[13] = (byte) 0x33;
                     b[14] = (byte) 0x4E;
                     b[15] = (byte) 0x16;
-                    socketWriter.write(b);
-                    socketWriter.flush();
+
                     System.out.println("request sent");
 
-
-
-                    socketWriter.write(0);
-                    socketWriter.flush();
+                    out.print(b);
+                    out.flush();
 
                     while (true){
-
-                        byte[] received = new byte[1024];
-                        int dataSize = socketReader.read(received);
-                        if(dataSize > 0){
-                            System.out.println("data received");
-                        }
-                        System.out.println(AmmeterClient.bytesToHexString(received));
+                        char[] recivedData = new char[1024];
+                        in.read(recivedData);
+                        System.out.println(recivedData);
                     }
                 }
 
