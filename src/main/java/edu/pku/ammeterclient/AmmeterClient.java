@@ -35,22 +35,41 @@ public class AmmeterClient {
 
                     byte[] b = new byte[16];
 //				    68 75 06 00 08 08 12
-                    b[0] = (byte) 0x68;
-                    b[1] = (byte) 0x75;
-                    b[2] = (byte) 0x06;
-                    b[3] = (byte) 0x00;
-                    b[4] = (byte) 0x08;
-                    b[5] = (byte) 0x08;
-                    b[6] = (byte) 0x12;
-                    b[7] = (byte) 0x68;
-                    b[8] = (byte) 0x11;
-                    b[9] = (byte) 0x04;
-                    b[10] = (byte) 0x33;
-                    b[11] = (byte) 0x33;
-                    b[12] = (byte) 0x33;
+                    b[0] = (byte) 0xfe;
+                    b[1] = (byte) 0xfe;
+                    b[2] = (byte) 0xfe;
+                    b[3] = (byte) 0x68;
+                    b[4] = (byte) 0x75;
+                    b[5] = (byte) 0x06;
+                    b[6] = (byte) 0x00;
+                    b[7] = (byte) 0x08;
+                    b[8] = (byte) 0x08;
+                    b[9] = (byte) 0x12;
+                    b[10] = (byte) 0x68;
+                    b[11] = (byte) 0x11;
+                    b[12] = (byte) 0x04;
                     b[13] = (byte) 0x33;
-                    b[14] = (byte) 0x4E;
-                    b[15] = (byte) 0x16;
+                    b[14] = (byte) 0x33;
+                    b[15] = (byte) 0x33;
+                    b[16] = (byte) 0x33;
+                    b[17] = (byte) 0x4E;
+                    b[18] = (byte) 0x16;
+//                    b[0] = (byte) 0x68;
+//                    b[1] = (byte) 0x75;
+//                    b[2] = (byte) 0x06;
+//                    b[3] = (byte) 0x00;
+//                    b[4] = (byte) 0x08;
+//                    b[5] = (byte) 0x08;
+//                    b[6] = (byte) 0x12;
+//                    b[7] = (byte) 0x68;
+//                    b[8] = (byte) 0x11;
+//                    b[9] = (byte) 0x04;
+//                    b[10] = (byte) 0x33;
+//                    b[11] = (byte) 0x33;
+//                    b[12] = (byte) 0x33;
+//                    b[13] = (byte) 0x33;
+//                    b[14] = (byte) 0x4E;
+//                    b[15] = (byte) 0x16;
 
                     System.out.println("request sent");
 
@@ -60,11 +79,13 @@ public class AmmeterClient {
 //                    out.flush();
 
                     while (true){
-                        byte[] received = new byte[34];
+                        byte[] received = new byte[1024];
                         dataOutputStream.write(b);
                         dataOutputStream.flush();
-                        dataInputStream.readFully(received);
-                        System.out.println(AmmeterClient.bytesToHexString(received));
+                        int count = dataInputStream.read(received);
+                        byte[] output = AmmeterClient.trimByteArray(received, count);
+//                        dataInputStream.readFully(received);
+                        System.out.println(AmmeterClient.bytesToHexString(output));
 
                     }
                 }
@@ -108,6 +129,12 @@ public class AmmeterClient {
 		
 		
 	}
+
+    public static byte[] trimByteArray(byte[] input, int size){
+        byte[] output = new byte[size];
+        System.arraycopy(input, 0, output, 0, size);
+        return output;
+    }
 	
 	public static String bytesToHexString(byte[] src){  
 	    StringBuilder stringBuilder = new StringBuilder("");  
