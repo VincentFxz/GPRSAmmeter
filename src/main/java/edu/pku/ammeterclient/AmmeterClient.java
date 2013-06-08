@@ -66,7 +66,7 @@ public class AmmeterClient {
 					}
 					totalBytesRcvd+=bytesRcvd;
 					
-					System.out.println("Receved: "+new String(AmmeterClient.bytesToHexString(received)));
+					System.out.println("Receved: "+AmmeterClient.bytesToHexString(received));
 					System.out.println(totalBytesRcvd);
 				}
 				socketWriter.write(0);
