@@ -24,50 +24,48 @@ public class AmmeterClient {
 			
 			while (true) {
 				Socket clientSocket = serverSocket.accept();
-				SocketAddress socketAddress = clientSocket.getRemoteSocketAddress();
-//				InetAddress inetAddress = clientSocket.getInetAddress();
-//				System.out.println(inetAddress.getHostAddress());
-				System.out.println(socketAddress.toString());
-//				Socket testSocket = new Socket(inetAddress.getHostAddress(), port);
-				InputStream socketReader = clientSocket.getInputStream();
-				OutputStream socketWriter = clientSocket.getOutputStream();
-				
-				byte[] heart = new byte[0];
-				
-				byte[] b = new byte[1024];
-//				6875 06 00 08 08 12
-				b[0] = (byte) 0x68;
-				b[1] = (byte) 0x75;
-				b[2] = (byte) 0x06;
-				b[3] = (byte) 0x00;
-				b[4] = (byte) 0x08;
-				b[5] = (byte) 0x08;
-				b[6] = (byte) 0x12;
-				b[7] = (byte) 0x68;
-				b[8] = (byte) 0x11;
-				b[9] = (byte) 0x04;
-				b[10] = (byte) 0x33;
-				b[11] = (byte) 0x33;
-				b[12] = (byte) 0x33;
-				b[13] = (byte) 0x33;
-				b[14] = (byte) 0x4E;
-				b[15] = (byte) 0x16;
-				socketWriter.write(b);
-				socketWriter.flush();
-				System.out.println("request sent");
-				
-				int totalBytesRcvd=0;
-				int bytesRcvd;
+                if(null != clientSocket){
+                    SocketAddress socketAddress = clientSocket.getRemoteSocketAddress();
+                    System.out.println(socketAddress.toString());
+                    InputStream socketReader = clientSocket.getInputStream();
+                    OutputStream socketWriter = clientSocket.getOutputStream();
 
-                socketWriter.write(0);
-                socketWriter.flush();
+                    byte[] b = new byte[1024];
+//				    68 75 06 00 08 08 12
+                    b[0] = (byte) 0x68;
+                    b[1] = (byte) 0x75;
+                    b[2] = (byte) 0x06;
+                    b[3] = (byte) 0x00;
+                    b[4] = (byte) 0x08;
+                    b[5] = (byte) 0x08;
+                    b[6] = (byte) 0x12;
+                    b[7] = (byte) 0x68;
+                    b[8] = (byte) 0x11;
+                    b[9] = (byte) 0x04;
+                    b[10] = (byte) 0x33;
+                    b[11] = (byte) 0x33;
+                    b[12] = (byte) 0x33;
+                    b[13] = (byte) 0x33;
+                    b[14] = (byte) 0x4E;
+                    b[15] = (byte) 0x16;
+                    socketWriter.write(b);
+                    socketWriter.flush();
+                    System.out.println("request sent");
 
-                while (true){
-                    byte[] received = new byte[1024];
-                    socketReader.read(received);
-                    System.out.println(AmmeterClient.bytesToHexString(received));
+
+
+                    socketWriter.write(0);
+                    socketWriter.flush();
+
+                    while (true){
+                        byte[] received = new byte[1024];
+                        socketReader.read(received);
+                        System.out.println(AmmeterClient.bytesToHexString(received));
+                    }
                 }
 
+//                int totalBytesRcvd=0;
+//                int bytesRcvd;
 				
 //				while(totalBytesRcvd<34){
 //					if((bytesRcvd=socketReader.read(received, totalBytesRcvd, 34-totalBytesRcvd))==-1){
