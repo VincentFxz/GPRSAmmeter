@@ -26,10 +26,14 @@ public class AmmeterClient {
                     System.out.println(socketAddress.toString());
                     InputStream socketReader = clientSocket.getInputStream();
                     OutputStream socketWriter = clientSocket.getOutputStream();
+
+                    DataInputStream dataInputStream = new DataInputStream(socketReader);
+                    DataOutputStream dataOutputStream = new DataOutputStream(socketWriter);
+
                     BufferedReader in = new BufferedReader(new InputStreamReader(socketReader));
                     PrintWriter out = new PrintWriter(socketWriter);
 
-                    byte[] b = new byte[1024];
+                    byte[] b = new byte[16];
 //				    68 75 06 00 08 08 12
                     b[0] = (byte) 0x68;
                     b[1] = (byte) 0x75;
@@ -50,13 +54,18 @@ public class AmmeterClient {
 
                     System.out.println("request sent");
 
-                    out.print(b);
-                    out.flush();
+                    dataOutputStream.write(b);
+                    dataOutputStream.flush();
+//                    out.print(b);
+//                    out.flush();
 
                     while (true){
-                        char[] recivedData = new char[1024];
-                        in.read(recivedData);
-                        System.out.println(recivedData);
+                        byte[] received = new byte[34];
+                        dataOutputStream.write(b);
+                        dataOutputStream.flush();
+                        dataInputStream.readFully(received);
+                        System.out.println(AmmeterClient.bytesToHexString(received));
+
                     }
                 }
 
